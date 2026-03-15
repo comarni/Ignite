@@ -1,0 +1,2119 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Portafolio de Dirección Creativa y Motion Design — IGNITE Studio">
+<title>IGNITE Studio — Dirección Creativa & Motion Design</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+/* ══════════════════════════════════════════════════
+   IGNITE STUDIO — styles.css
+   Portafolio de Dirección Creativa & Motion Design
+   ══════════════════════════════════════════════════ */
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --fire:    #FF4500;
+  --ember:   #FF8C00;
+  --gold:    #FFD700;
+  --dark:    #080705;
+  --dark2:   #111009;
+  --mid:     #181512;
+  --mid2:    #201c18;
+  --border:  rgba(255,255,255,0.07);
+  --light:   #f0ede6;
+  --muted:   #7a7570;
+  --muted2:  #504d49;
+  --radius:  3px;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--dark);
+  color: var(--light);
+  font-family: 'Barlow', sans-serif;
+  overflow-x: hidden;
+  cursor: none;
+}
+
+/* ─── CURSOR PERSONALIZADO ──────────────────── */
+.cursor {
+  position: fixed;
+  pointer-events: none;
+  z-index: 9999;
+  mix-blend-mode: difference;
+}
+.cursor-dot {
+  width: 6px; height: 6px;
+  background: #fff;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: width 0.2s, height 0.2s, opacity 0.2s;
+}
+.cursor-ring {
+  width: 32px; height: 32px;
+  border: 1px solid rgba(255,255,255,0.6);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: width 0.35s cubic-bezier(0.22,1,0.36,1),
+              height 0.35s cubic-bezier(0.22,1,0.36,1),
+              border-color 0.2s, opacity 0.3s;
+}
+body.cursor-hover .cursor-ring {
+  width: 56px; height: 56px;
+  border-color: var(--fire);
+}
+body.cursor-hover .cursor-dot { opacity: 0; }
+
+/* ─── NAVBAR ────────────────────────────────── */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 500;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.4rem 3.5rem;
+  transition: background 0.5s, padding 0.4s;
+}
+nav.scrolled {
+  background: rgba(8,7,5,0.96);
+  padding: 1rem 3.5rem;
+  border-bottom: 1px solid var(--border);
+  backdrop-filter: blur(12px);
+}
+.nav-logo {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.6rem;
+  letter-spacing: 5px;
+  background: linear-gradient(90deg, var(--fire), var(--gold));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-decoration: none;
+}
+.nav-links { display: flex; gap: 2.5rem; list-style: none; align-items: center; }
+.nav-links a {
+  color: rgba(240,237,230,0.55);
+  text-decoration: none;
+  font-size: 0.78rem;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  transition: color 0.2s;
+  position: relative;
+}
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  bottom: -4px; left: 0;
+  width: 0; height: 1px;
+  background: var(--fire);
+  transition: width 0.3s ease;
+}
+.nav-links a:hover { color: var(--light); }
+.nav-links a:hover::after { width: 100%; }
+.nav-cta {
+  padding: 0.6rem 1.6rem !important;
+  border: 1px solid var(--fire) !important;
+  color: var(--light) !important;
+  border-radius: var(--radius);
+  transition: background 0.2s, color 0.2s !important;
+}
+.nav-cta:hover { background: var(--fire) !important; }
+.nav-cta::after { display: none !important; }
+
+/* Menú hamburguesa mobile */
+.nav-burger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: none;
+  padding: 4px;
+}
+.nav-burger span {
+  display: block;
+  width: 24px; height: 1.5px;
+  background: var(--light);
+  transition: transform 0.3s, opacity 0.3s;
+}
+.nav-burger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+.nav-burger.open span:nth-child(2) { opacity: 0; }
+.nav-burger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+/* ─── HERO ──────────────────────────────────── */
+.hero-scroll-driver { position: relative; height: 300vh; }
+
+.hero-sticky {
+  position: sticky; top: 0;
+  height: 100vh; overflow: hidden;
+  display: flex; align-items: center; justify-content: center;
+}
+#hero-canvas {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%; display: block;
+}
+.hero-overlay {
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse at center, transparent 20%, rgba(0,0,0,0.6) 100%),
+    linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.5) 100%);
+  pointer-events: none;
+}
+.hero-content {
+  position: relative; z-index: 10;
+  text-align: center; padding: 2rem;
+  transition: opacity 0.2s, transform 0.2s;
+}
+.hero-eyebrow {
+  font-size: 0.72rem; letter-spacing: 7px;
+  text-transform: uppercase; color: var(--gold);
+  margin-bottom: 1.8rem;
+  opacity: 0; transform: translateY(20px);
+  animation: fadeUp 0.8s 0.3s forwards;
+}
+.hero-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(5.5rem, 16vw, 15rem);
+  line-height: 0.88; letter-spacing: -3px;
+  background: linear-gradient(135deg, #fff 0%, var(--gold) 45%, var(--fire) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  opacity: 0; transform: scale(0.88);
+  animation: heroIn 1.1s 0.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  filter: drop-shadow(0 0 80px rgba(255,69,0,0.35));
+}
+.hero-tagline {
+  margin-top: 2rem;
+  font-size: 1rem; font-weight: 300;
+  letter-spacing: 4px; text-transform: uppercase;
+  color: rgba(240,237,230,0.5);
+  opacity: 0; transform: translateY(20px);
+  animation: fadeUp 0.8s 0.9s forwards;
+}
+.hero-badges {
+  display: flex; gap: 1rem;
+  justify-content: center;
+  margin-top: 2rem;
+  opacity: 0; transform: translateY(20px);
+  animation: fadeUp 0.8s 1.1s forwards;
+}
+.badge {
+  padding: 0.4rem 1rem;
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 100px;
+  font-size: 0.7rem; letter-spacing: 2px;
+  text-transform: uppercase; color: var(--muted);
+  transition: border-color 0.3s, color 0.3s;
+}
+.badge:hover { border-color: var(--fire); color: var(--light); }
+.hero-scroll-text {
+  position: absolute; bottom: 12%; left: 50%;
+  transform: translateX(-50%) translateY(30px);
+  z-index: 10; text-align: center;
+  opacity: 0; transition: opacity 0.5s, transform 0.5s;
+  pointer-events: none; white-space: nowrap;
+}
+.hero-scroll-text.visible { opacity: 1; transform: translateX(-50%) translateY(0); }
+.hero-scroll-text h2 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(2.2rem, 5.5vw, 5.5rem);
+  letter-spacing: 6px; color: #fff;
+}
+.hero-scroll-text h2 span {
+  background: linear-gradient(90deg, var(--gold), var(--fire));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+.scroll-hint {
+  position: absolute; bottom: 2.5rem; left: 50%;
+  transform: translateX(-50%);
+  display: flex; flex-direction: column;
+  align-items: center; gap: 8px;
+  opacity: 0; animation: fadeUp 1s 1.8s forwards;
+  z-index: 10; transition: opacity 0.3s;
+}
+.scroll-hint p {
+  font-size: 0.62rem; letter-spacing: 3px;
+  text-transform: uppercase; color: rgba(255,255,255,0.3);
+}
+.scroll-hint-line {
+  width: 1px; height: 46px;
+  background: linear-gradient(to bottom, var(--fire), transparent);
+  animation: scrollPulse 1.6s ease-in-out infinite;
+}
+
+/* ─── SECCIÓN: SOBRE MÍ ─────────────────────── */
+.about {
+  padding: 9rem 0;
+  background: var(--dark2);
+  position: relative;
+  overflow: hidden;
+}
+.about::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--fire), var(--gold), transparent);
+}
+.about-inner {
+  max-width: 1280px; margin: 0 auto;
+  padding: 0 4rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6rem;
+  align-items: center;
+}
+.about-label {
+  font-size: 0.72rem; letter-spacing: 5px;
+  text-transform: uppercase; color: var(--fire);
+  margin-bottom: 1.5rem;
+}
+.about-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(2.8rem, 5vw, 4.5rem);
+  line-height: 1; letter-spacing: 2px;
+  margin-bottom: 2rem;
+}
+.about-title span {
+  background: linear-gradient(90deg, var(--gold), var(--fire));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+.about-body {
+  font-size: 1rem; font-weight: 300;
+  line-height: 1.85; color: rgba(240,237,230,0.65);
+  margin-bottom: 2rem;
+}
+.about-stats {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem; margin-top: 3rem;
+}
+.stat-item { border-left: 2px solid var(--fire); padding-left: 1.2rem; }
+.stat-num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 2.8rem; line-height: 1;
+  background: linear-gradient(135deg, var(--gold), var(--fire));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+.stat-label {
+  font-size: 0.72rem; letter-spacing: 2px;
+  text-transform: uppercase; color: var(--muted);
+  margin-top: 0.3rem;
+}
+.about-photo {
+  position: relative;
+}
+.about-photo-frame {
+  aspect-ratio: 3/4; border-radius: var(--radius);
+  overflow: hidden; position: relative;
+}
+.about-photo-canvas {
+  width: 100%; height: 100%; display: block;
+}
+.about-photo-frame::after {
+  content: '';
+  position: absolute; inset: 0;
+  border: 1px solid rgba(255,69,0,0.25);
+  border-radius: var(--radius);
+  pointer-events: none;
+}
+.about-photo-deco {
+  position: absolute;
+  top: -20px; right: -20px;
+  width: 120px; height: 120px;
+  border: 1px solid rgba(255,200,0,0.2);
+  border-radius: 50%;
+}
+.about-skills {
+  display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 2rem;
+}
+.skill-tag {
+  padding: 0.35rem 0.9rem;
+  background: rgba(255,69,0,0.08);
+  border: 1px solid rgba(255,69,0,0.2);
+  border-radius: 100px;
+  font-size: 0.72rem; letter-spacing: 1.5px;
+  color: rgba(240,237,230,0.7); text-transform: uppercase;
+}
+
+/* ─── SECCIÓN: PORTAFOLIO ───────────────────── */
+.portfolio {
+  padding: 9rem 0;
+  background: var(--mid);
+  position: relative;
+}
+.portfolio::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--fire) 30%, var(--gold) 70%, transparent);
+}
+.section-header {
+  text-align: center; margin-bottom: 4rem;
+  padding: 0 2rem;
+}
+.section-label {
+  font-size: 0.72rem; letter-spacing: 5px;
+  text-transform: uppercase; color: var(--fire);
+  margin-bottom: 1rem;
+}
+.section-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(2.8rem, 6vw, 5.5rem);
+  letter-spacing: 3px; line-height: 1;
+}
+.section-sub {
+  margin-top: 1rem; color: var(--muted);
+  font-weight: 300; max-width: 500px;
+  margin-inline: auto; line-height: 1.7;
+}
+
+/* Filtros de portafolio */
+.portfolio-filters {
+  display: flex; justify-content: center;
+  gap: 0.5rem; margin-bottom: 3.5rem;
+  flex-wrap: wrap; padding: 0 2rem;
+}
+.filter-btn {
+  padding: 0.55rem 1.4rem;
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--muted);
+  font-family: 'Barlow', sans-serif;
+  font-size: 0.75rem; letter-spacing: 2px;
+  text-transform: uppercase; border-radius: 100px;
+  cursor: none; transition: all 0.25s;
+}
+.filter-btn:hover { border-color: rgba(255,69,0,0.4); color: var(--light); }
+.filter-btn.active {
+  background: var(--fire); border-color: var(--fire);
+  color: #fff;
+}
+
+/* Grid de proyectos */
+.portfolio-grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 1.2rem;
+  padding: 0 3.5rem;
+  max-width: 1400px; margin: 0 auto;
+}
+.project-card {
+  border-radius: var(--radius);
+  overflow: hidden;
+  position: relative;
+  background: var(--mid2);
+  cursor: none;
+  transition: transform 0.4s cubic-bezier(0.22,1,0.36,1), opacity 0.4s;
+  grid-column: span 4;
+}
+.project-card.wide   { grid-column: span 8; }
+.project-card.tall   { grid-row: span 2; }
+.project-card.hidden { opacity: 0; pointer-events: none; transform: scale(0.95); }
+
+.project-thumb {
+  width: 100%; aspect-ratio: 16/9;
+  overflow: hidden; position: relative;
+}
+.project-card.tall .project-thumb { aspect-ratio: 9/12; }
+.project-card.wide .project-thumb { aspect-ratio: 21/9; }
+
+.project-canvas {
+  width: 100%; height: 100%;
+  display: block; transition: transform 0.6s cubic-bezier(0.22,1,0.36,1);
+}
+.project-card:hover .project-canvas { transform: scale(1.05); }
+
+.project-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.3) 50%, transparent 100%);
+  opacity: 0; transition: opacity 0.4s;
+  display: flex; flex-direction: column;
+  justify-content: flex-end; padding: 2rem;
+}
+.project-card:hover .project-overlay { opacity: 1; }
+
+.project-info { padding: 1.5rem; }
+.project-cat {
+  font-size: 0.68rem; letter-spacing: 3px;
+  text-transform: uppercase; color: var(--fire);
+  margin-bottom: 0.4rem;
+}
+.project-name {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.4rem; letter-spacing: 2px;
+  margin-bottom: 0.3rem;
+}
+.project-year { font-size: 0.78rem; color: var(--muted); }
+.project-hover-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.8rem; letter-spacing: 2px;
+  margin-bottom: 0.5rem;
+}
+.project-hover-desc {
+  font-size: 0.85rem; font-weight: 300;
+  color: rgba(240,237,230,0.75); line-height: 1.6;
+  margin-bottom: 1rem;
+}
+.project-tags { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+.ptag {
+  font-size: 0.65rem; letter-spacing: 1.5px;
+  text-transform: uppercase;
+  padding: 0.25rem 0.65rem;
+  background: rgba(255,255,255,0.08);
+  border-radius: 100px;
+}
+
+/* Modal de proyecto */
+.modal-overlay {
+  position: fixed; inset: 0; z-index: 800;
+  background: rgba(0,0,0,0.92);
+  display: flex; align-items: center; justify-content: center;
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.4s;
+  backdrop-filter: blur(8px);
+}
+.modal-overlay.open { opacity: 1; pointer-events: all; }
+.modal {
+  background: var(--mid);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  width: 90vw; max-width: 900px;
+  max-height: 85vh; overflow-y: auto;
+  transform: translateY(30px) scale(0.97);
+  transition: transform 0.4s cubic-bezier(0.22,1,0.36,1);
+  position: relative;
+}
+.modal-overlay.open .modal { transform: translateY(0) scale(1); }
+.modal-canvas-wrap { width: 100%; aspect-ratio: 16/7; overflow: hidden; position: relative; }
+.modal-canvas { width: 100%; height: 100%; display: block; }
+.modal-body { padding: 2.5rem; }
+.modal-cat {
+  font-size: 0.7rem; letter-spacing: 4px;
+  text-transform: uppercase; color: var(--fire); margin-bottom: 0.8rem;
+}
+.modal-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 3rem; letter-spacing: 3px; margin-bottom: 1rem;
+}
+.modal-desc {
+  font-weight: 300; line-height: 1.8;
+  color: rgba(240,237,230,0.7); margin-bottom: 2rem;
+  font-size: 0.95rem;
+}
+.modal-meta {
+  display: grid; grid-template-columns: repeat(3,1fr);
+  gap: 1.5rem; padding: 1.5rem 0;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 2rem;
+}
+.modal-meta-item label {
+  font-size: 0.65rem; letter-spacing: 3px;
+  text-transform: uppercase; color: var(--muted);
+  display: block; margin-bottom: 0.3rem;
+}
+.modal-meta-item span { font-size: 0.9rem; font-weight: 400; }
+.modal-close {
+  position: absolute; top: 1.2rem; right: 1.2rem;
+  width: 40px; height: 40px;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid var(--border);
+  border-radius: 50%; cursor: none;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1rem; color: var(--muted);
+  transition: background 0.2s, color 0.2s;
+}
+.modal-close:hover { background: var(--fire); color: #fff; }
+.modal-link {
+  display: inline-flex; align-items: center; gap: 0.6rem;
+  padding: 0.8rem 2rem;
+  background: var(--fire); color: #fff;
+  text-decoration: none; font-size: 0.78rem;
+  letter-spacing: 2.5px; text-transform: uppercase;
+  border-radius: var(--radius);
+  transition: background 0.2s, transform 0.2s;
+}
+.modal-link:hover { background: var(--ember); transform: translateY(-2px); }
+
+/* ─── SECCIÓN: SERVICIOS ────────────────────── */
+.services {
+  padding: 9rem 0;
+  background: var(--dark2);
+  position: relative;
+}
+.services::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold), var(--fire), transparent);
+}
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1px;
+  max-width: 1280px; margin: 0 auto;
+  padding: 0 3.5rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius); overflow: hidden;
+}
+.service-item {
+  padding: 3rem;
+  background: var(--dark2);
+  border: 1px solid var(--border);
+  transition: background 0.3s;
+  position: relative; overflow: hidden;
+}
+.service-item::after {
+  content: attr(data-num);
+  position: absolute; bottom: -1rem; right: 1.5rem;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 6rem; letter-spacing: -2px;
+  color: rgba(255,69,0,0.05);
+  transition: color 0.3s;
+}
+.service-item:hover { background: rgba(255,69,0,0.04); }
+.service-item:hover::after { color: rgba(255,69,0,0.1); }
+.service-icon {
+  width: 48px; height: 48px; margin-bottom: 1.8rem;
+  color: var(--fire);
+}
+.service-name {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.6rem; letter-spacing: 2px; margin-bottom: 1rem;
+}
+.service-desc {
+  font-weight: 300; line-height: 1.75;
+  color: var(--muted); font-size: 0.9rem; margin-bottom: 1.5rem;
+}
+.service-list {
+  list-style: none; display: flex; flex-direction: column; gap: 0.4rem;
+}
+.service-list li {
+  font-size: 0.8rem; color: rgba(240,237,230,0.5);
+  padding-left: 1rem; position: relative;
+}
+.service-list li::before {
+  content: '—'; position: absolute; left: 0;
+  color: var(--fire); font-size: 0.7rem;
+}
+
+/* ─── SECCIÓN: PROCESO ──────────────────────── */
+.process {
+  padding: 9rem 0;
+  background: var(--mid);
+  position: relative; overflow: hidden;
+}
+.process::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--fire), transparent);
+}
+.process-inner {
+  max-width: 1000px; margin: 0 auto; padding: 0 4rem;
+}
+.process-steps { margin-top: 4rem; position: relative; }
+.process-steps::before {
+  content: '';
+  position: absolute; left: 24px; top: 0; bottom: 0;
+  width: 1px; background: var(--border);
+}
+.process-step {
+  display: flex; gap: 2.5rem; align-items: flex-start;
+  padding: 2.5rem 0; position: relative;
+  border-bottom: 1px solid var(--border);
+}
+.process-step:last-child { border-bottom: none; }
+.step-num {
+  width: 48px; height: 48px; flex-shrink: 0;
+  background: var(--mid2); border: 1px solid var(--border);
+  border-radius: 50%; display: flex;
+  align-items: center; justify-content: center;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.1rem; letter-spacing: 1px;
+  color: var(--fire); z-index: 1;
+  transition: background 0.3s, border-color 0.3s;
+}
+.process-step:hover .step-num {
+  background: var(--fire); border-color: var(--fire); color: #fff;
+}
+.step-body { flex: 1; }
+.step-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.5rem; letter-spacing: 2px; margin-bottom: 0.6rem;
+}
+.step-desc {
+  font-weight: 300; line-height: 1.75;
+  color: var(--muted); font-size: 0.9rem;
+}
+
+/* ─── SECCIÓN: CLIENTES / LOGOS ─────────────── */
+.clients {
+  padding: 6rem 0;
+  background: var(--dark);
+  overflow: hidden;
+  position: relative;
+}
+.clients::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255,69,0,0.3), transparent);
+}
+.clients-label {
+  text-align: center;
+  font-size: 0.72rem; letter-spacing: 5px;
+  text-transform: uppercase; color: var(--muted2);
+  margin-bottom: 3rem;
+}
+.clients-track {
+  display: flex; gap: 4rem; align-items: center;
+  animation: marquee 25s linear infinite;
+  white-space: nowrap;
+}
+.clients-track-wrap {
+  display: flex; overflow: hidden;
+}
+.client-logo {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.3rem; letter-spacing: 4px;
+  color: rgba(255,255,255,0.12);
+  transition: color 0.3s; flex-shrink: 0;
+  padding: 0 2rem;
+}
+.client-logo:hover { color: rgba(255,255,255,0.5); }
+
+/* ─── SECCIÓN: CONTACTO ─────────────────────── */
+.contact {
+  padding: 9rem 0;
+  background: var(--dark2);
+  position: relative;
+}
+.contact::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold), var(--fire), transparent);
+}
+.contact-inner {
+  max-width: 1000px; margin: 0 auto;
+  padding: 0 4rem;
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 6rem; align-items: start;
+}
+.contact-info { padding-top: 1rem; }
+.contact-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(3rem, 5vw, 5rem);
+  letter-spacing: 3px; line-height: 1.05;
+  margin-bottom: 1.5rem;
+}
+.contact-title span {
+  background: linear-gradient(90deg, var(--gold), var(--fire));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+.contact-body {
+  font-weight: 300; line-height: 1.8;
+  color: var(--muted); font-size: 0.95rem; margin-bottom: 2.5rem;
+}
+.contact-links { display: flex; flex-direction: column; gap: 1rem; }
+.contact-link {
+  display: flex; align-items: center; gap: 1rem;
+  color: rgba(240,237,230,0.55); text-decoration: none;
+  font-size: 0.85rem; letter-spacing: 1px;
+  transition: color 0.2s;
+}
+.contact-link:hover { color: var(--light); }
+.contact-link-icon {
+  width: 36px; height: 36px;
+  border: 1px solid var(--border); border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.85rem; flex-shrink: 0;
+  transition: border-color 0.3s, background 0.3s;
+}
+.contact-link:hover .contact-link-icon {
+  border-color: var(--fire); background: rgba(255,69,0,0.1);
+}
+
+/* Formulario */
+.contact-form { display: flex; flex-direction: column; gap: 1.2rem; }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+.form-group { display: flex; flex-direction: column; gap: 0.5rem; }
+.form-group label {
+  font-size: 0.7rem; letter-spacing: 2.5px;
+  text-transform: uppercase; color: var(--muted);
+}
+.form-group input,
+.form-group select,
+.form-group textarea {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 0.9rem 1.1rem;
+  color: var(--light);
+  font-family: 'Barlow', sans-serif;
+  font-size: 0.9rem; font-weight: 300;
+  outline: none; resize: none;
+  transition: border-color 0.25s, background 0.25s;
+  cursor: none;
+}
+.form-group input:focus,
+.form-group select,
+.form-group textarea:focus {
+  border-color: rgba(255,69,0,0.5);
+  background: rgba(255,69,0,0.04);
+}
+.form-group select option { background: var(--mid); }
+.form-group textarea { height: 130px; }
+.form-submit {
+  padding: 1rem 2.5rem;
+  background: linear-gradient(90deg, var(--fire), var(--ember));
+  border: none; color: #fff;
+  font-family: 'Barlow', sans-serif;
+  font-size: 0.8rem; letter-spacing: 3px;
+  text-transform: uppercase; border-radius: var(--radius);
+  cursor: none; transition: transform 0.2s, box-shadow 0.3s;
+  box-shadow: 0 4px 30px rgba(255,69,0,0.25);
+}
+.form-submit:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 40px rgba(255,69,0,0.4);
+}
+.form-submit:active { transform: translateY(0); }
+.form-success {
+  display: none; text-align: center; padding: 2rem;
+  color: var(--gold); font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.5rem; letter-spacing: 3px;
+}
+
+/* ─── PARALLAX BANNER ───────────────────────── */
+.parallax-banner {
+  position: relative; height: 55vh;
+  display: flex; align-items: center; justify-content: center;
+  overflow: hidden;
+}
+#parallax-canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+.parallax-content { position: relative; z-index: 2; text-align: center; }
+.parallax-content h2 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(3.5rem, 8vw, 9rem);
+  letter-spacing: 8px; color: white;
+  text-shadow: 0 0 100px rgba(255,69,0,0.5);
+}
+.parallax-content p {
+  margin-top: 1.2rem; font-weight: 300;
+  letter-spacing: 3px; font-size: 0.82rem;
+  text-transform: uppercase; color: rgba(255,255,255,0.45);
+}
+
+/* ─── FOOTER ────────────────────────────────── */
+footer {
+  background: var(--dark);
+  border-top: 1px solid var(--border);
+  padding: 3rem 3.5rem;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center; gap: 2rem;
+}
+.footer-logo {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.4rem; letter-spacing: 5px;
+  background: linear-gradient(90deg, var(--fire), var(--gold));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  text-decoration: none;
+}
+.footer-links {
+  display: flex; gap: 2rem; justify-content: center;
+  list-style: none;
+}
+.footer-links a {
+  font-size: 0.72rem; letter-spacing: 2px;
+  text-transform: uppercase; color: var(--muted2);
+  text-decoration: none; transition: color 0.2s;
+}
+.footer-links a:hover { color: var(--light); }
+.footer-right { font-size: 0.75rem; color: var(--muted2); text-align: right; }
+
+/* ─── UTILIDADES ────────────────────────────── */
+.reveal {
+  opacity: 0; transform: translateY(35px);
+  transition: opacity 0.75s ease, transform 0.75s ease;
+}
+.reveal.visible { opacity: 1; transform: translateY(0); }
+.reveal-left {
+  opacity: 0; transform: translateX(-40px);
+  transition: opacity 0.75s ease, transform 0.75s ease;
+}
+.reveal-left.visible { opacity: 1; transform: translateX(0); }
+.reveal-right {
+  opacity: 0; transform: translateX(40px);
+  transition: opacity 0.75s ease, transform 0.75s ease;
+}
+.reveal-right.visible { opacity: 1; transform: translateX(0); }
+
+/* Toast de notificación */
+.toast {
+  position: fixed; bottom: 2rem; right: 2rem; z-index: 900;
+  background: var(--mid2); border: 1px solid var(--border);
+  border-left: 3px solid var(--fire);
+  padding: 1rem 1.5rem; border-radius: var(--radius);
+  font-size: 0.85rem; color: var(--light);
+  transform: translateY(20px); opacity: 0;
+  transition: all 0.4s cubic-bezier(0.22,1,0.36,1);
+  pointer-events: none;
+}
+.toast.show { transform: translateY(0); opacity: 1; }
+
+/* ─── ANIMACIONES ───────────────────────────── */
+@keyframes fadeUp {
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+@keyframes heroIn {
+  to { opacity: 1; transform: scale(1); }
+}
+@keyframes scrollPulse {
+  0%,100% { opacity: 0.3; transform: scaleY(0.4); }
+  50%     { opacity: 1;   transform: scaleY(1); }
+}
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ─── RESPONSIVE ────────────────────────────── */
+@media (max-width: 900px) {
+  nav { padding: 1.2rem 1.8rem; }
+  nav.scrolled { padding: 0.9rem 1.8rem; }
+  .nav-links { display: none; }
+  .nav-burger { display: flex; }
+  .nav-mobile {
+    position: fixed; inset: 0; z-index: 490;
+    background: rgba(8,7,5,0.97);
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    gap: 2.5rem; opacity: 0; pointer-events: none;
+    transition: opacity 0.4s;
+  }
+  .nav-mobile.open { opacity: 1; pointer-events: all; }
+  .nav-mobile a {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.5rem; letter-spacing: 4px;
+    color: var(--light); text-decoration: none;
+    transition: color 0.2s;
+  }
+  .nav-mobile a:hover { color: var(--fire); }
+
+  .about-inner { grid-template-columns: 1fr; gap: 3rem; padding: 0 2rem; }
+  .about-photo { display: none; }
+  .about-stats { grid-template-columns: repeat(3,1fr); }
+  .portfolio-grid { grid-template-columns: 1fr 1fr; padding: 0 1.5rem; }
+  .project-card.wide { grid-column: span 2; }
+  .project-card.tall { grid-row: span 1; }
+  .contact-inner { grid-template-columns: 1fr; gap: 3rem; padding: 0 2rem; }
+  .services-grid { padding: 0 1.5rem; }
+  footer { grid-template-columns: 1fr; text-align: center; }
+  .footer-links { justify-content: center; }
+  .footer-right { text-align: center; }
+  .process-inner { padding: 0 2rem; }
+  body { cursor: auto; }
+  .cursor { display: none; }
+}
+@media (max-width: 560px) {
+  .portfolio-grid { grid-template-columns: 1fr; }
+  .project-card.wide { grid-column: span 1; }
+  .form-row { grid-template-columns: 1fr; }
+  .about-stats { grid-template-columns: 1fr 1fr; }
+  .modal-meta { grid-template-columns: 1fr 1fr; }
+}
+
+</style>
+</head>
+<body>
+
+<!-- ─── CURSOR ─── -->
+<div class="cursor" id="cursor-ring" style="position:fixed;pointer-events:none;z-index:9999;"><div class="cursor-ring"></div></div>
+<div class="cursor" id="cursor-dot"  style="position:fixed;pointer-events:none;z-index:9999;"><div class="cursor-dot"></div></div>
+
+<!-- ─── TOAST ─── -->
+<div class="toast" id="toast"></div>
+
+<!-- ─── NAVBAR ─── -->
+<nav id="navbar">
+  <a href="#" class="nav-logo">IGNITE</a>
+  <ul class="nav-links">
+    <li><a href="#sobre-mi">Sobre mí</a></li>
+    <li><a href="#portafolio">Portafolio</a></li>
+    <li><a href="#servicios">Servicios</a></li>
+    <li><a href="#proceso">Proceso</a></li>
+    <li><a href="#contacto" class="nav-cta">Trabajemos juntos</a></li>
+  </ul>
+  <button class="nav-burger" id="nav-burger" aria-label="Menú">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- Menú móvil -->
+<div class="nav-mobile" id="nav-mobile">
+  <a href="#sobre-mi">Sobre mí</a>
+  <a href="#portafolio">Portafolio</a>
+  <a href="#servicios">Servicios</a>
+  <a href="#proceso">Proceso</a>
+  <a href="#contacto">Contacto</a>
+</div>
+
+<!-- ══════════════════════════════════════════════════
+     HERO — Scroll-driven fire animation
+     ══════════════════════════════════════════════════ -->
+<div class="hero-scroll-driver" id="hero-driver">
+  <div class="hero-sticky">
+    <canvas id="hero-canvas"></canvas>
+    <div class="hero-overlay"></div>
+
+    <div class="hero-content" id="hero-content">
+      <p class="hero-eyebrow">Dirección Creativa & Motion Design</p>
+      <h1 class="hero-title">IGNITE</h1>
+      <p class="hero-tagline">Ideas que arden. Marcas que perduran.</p>
+      <div class="hero-badges">
+        <span class="badge">Identidad Visual</span>
+        <span class="badge">Motion Design</span>
+        <span class="badge">UX / UI</span>
+        <span class="badge">Web Design</span>
+      </div>
+    </div>
+
+    <div class="hero-scroll-text" id="hero-scroll-text">
+      <h2>Creatividad <span>sin límites</span></h2>
+    </div>
+
+    <div class="scroll-hint" id="scroll-hint">
+      <p>Scroll</p>
+      <div class="scroll-hint-line"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════
+     SOBRE MÍ
+     ══════════════════════════════════════════════════ -->
+<section class="about" id="sobre-mi">
+  <div class="about-inner">
+
+    <div>
+      <p class="about-label reveal">Sobre mí</p>
+      <h2 class="about-title reveal" style="transition-delay:0.1s">
+        Creando experiencias<br><span>que no se olvidan</span>
+      </h2>
+      <p class="about-body reveal" style="transition-delay:0.2s">
+        Soy Javier Serrano, director creativo y motion designer con más de 8 años construyendo identidades visuales, experiencias web y piezas de movimiento para marcas que quieren dejar huella. Trabajo en la intersección entre diseño, tecnología y narrativa visual.
+      </p>
+      <p class="about-body reveal" style="transition-delay:0.25s">
+        Mi filosofía es simple: cada proyecto merece arder. No produzco templates ni soluciones genéricas. Cada entrega es una pieza pensada desde cero para resonar con su audiencia específica.
+      </p>
+
+      <div class="about-skills reveal" style="transition-delay:0.3s">
+        <span class="skill-tag">After Effects</span>
+        <span class="skill-tag">Cinema 4D</span>
+        <span class="skill-tag">Figma</span>
+        <span class="skill-tag">Three.js</span>
+        <span class="skill-tag">Branding</span>
+        <span class="skill-tag">WebGL</span>
+        <span class="skill-tag">Illustrator</span>
+        <span class="skill-tag">GSAP</span>
+        <span class="skill-tag">Dirección de Arte</span>
+      </div>
+
+      <div class="about-stats reveal" style="transition-delay:0.35s">
+        <div class="stat-item">
+          <div class="stat-num">8+</div>
+          <div class="stat-label">Años de experiencia</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">120</div>
+          <div class="stat-label">Proyectos entregados</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">40+</div>
+          <div class="stat-label">Clientes satisfechos</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="about-photo reveal-right" style="transition-delay:0.2s">
+      <div class="about-photo-frame">
+        <canvas class="about-photo-canvas" id="about-canvas"></canvas>
+      </div>
+      <div class="about-photo-deco"></div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════
+     PORTAFOLIO
+     ══════════════════════════════════════════════════ -->
+<section class="portfolio" id="portafolio">
+  <div class="section-header reveal">
+    <p class="section-label">Portafolio</p>
+    <h2 class="section-title">Trabajos seleccionados</h2>
+    <p class="section-sub">Haz clic en cualquier proyecto para ver los detalles completos</p>
+  </div>
+
+  <div class="portfolio-filters reveal" style="transition-delay:0.1s">
+    <button class="filter-btn active" data-filter="all">Todos</button>
+    <button class="filter-btn" data-filter="identidad">Identidad Visual</button>
+    <button class="filter-btn" data-filter="motion">Motion Design</button>
+    <button class="filter-btn" data-filter="ux">UX / UI</button>
+    <button class="filter-btn" data-filter="web">Web Design</button>
+    <button class="filter-btn" data-filter="arte">Dirección de Arte</button>
+  </div>
+
+  <div class="portfolio-grid">
+
+    <!-- Proyecto 1 — wide -->
+    <div class="project-card wide reveal" data-cat="identidad" data-id="fuego-identidad">
+      <div class="project-thumb">
+        <canvas class="project-canvas" data-type="geo" data-palette="fire"></canvas>
+        <div class="project-overlay">
+          <p class="project-hover-title">FUEGO — Identidad</p>
+          <p class="project-hover-desc">Sistema de identidad visual completo para marca de bebidas premium: logo, tipografía, packaging y guía de marca.</p>
+          <div class="project-tags">
+            <span class="ptag">Identidad</span>
+            <span class="ptag">Packaging</span>
+            <span class="ptag">Branding</span>
+          </div>
+        </div>
+      </div>
+      <div class="project-info">
+        <p class="project-cat">Identidad Visual</p>
+        <p class="project-name">FUEGO — Identidad Corporativa</p>
+        <p class="project-year">2025</p>
+      </div>
+    </div>
+
+    <!-- Proyecto 2 -->
+    <div class="project-card reveal" style="transition-delay:0.1s" data-cat="motion" data-id="motion-reel">
+      <div class="project-thumb">
+        <canvas class="project-canvas" data-type="waves" data-palette="amber"></canvas>
+        <div class="project-overlay">
+          <p class="project-hover-title">Motion Reel 2025</p>
+          <p class="project-hover-desc">Compilado anual de trabajos en motion design, títulos de apertura y piezas experimentales.</p>
+          <div class="project-tags">
+            <span class="ptag">After Effects</span>
+            <span class="ptag">Motion</span>
+          </div>
+        </div>
+      </div>
+      <div class="project-info">
+        <p class="project-cat">Motion Design</p>
+        <p class="project-name">Motion Reel 2025</p>
+        <p class="project-year">2025</p>
+      </div>
+    </div>
+
+    <!-- Proyecto 3 — tall -->
+    <div class="project-card tall reveal" style="transition-delay:0.15s" data-cat="ux" data-id="atlas-app">
+      <div class="project-thumb">
+        <canvas class="project-canvas" data-type="grid" data-palette="blue"></canvas>
+        <div class="project-overlay">
+          <p class="project-hover-title">Atlas App</p>
+          <p class="project-hover-desc">Diseño UX/UI para aplicación móvil de exploración geográfica y narrativa cultural.</p>
+          <div class="project-tags">
+            <span class="ptag">Figma</span>
+            <span class="ptag">UX</span>
+          </div>
+        </div>
+      </div>
+      <div class="project-info">
+        <p class="project-cat">UX / UI</p>
+        <p class="project-name">Atlas — App de Exploración</p>
+        <p class="project-year">2024</p>
+      </div>
+    </div>
+
+    <!-- Proyecto 4 -->
+    <div class="project-card reveal" style="transition-delay:0.2s" data-cat="web" data-id="vulcan-web">
+      <div class="project-thumb">
+        <canvas class="project-canvas" data-type="noise" data-palette="amber"></canvas>
+        <div class="project-overlay">
+          <p class="project-hover-title">Vulcan Web</p>
+          <p class="project-hover-desc">Sitio inmersivo con scroll narrativo para estudio de arquitectura de lujo.</p>
+          <div class="project-tags">
+            <span class="ptag">WebGL</span>
+            <span class="ptag">JS</span>
+          </div>
+        </div>
+      </div>
+      <div class="project-info">
+        <p class="project-cat">Web Design</p>
+        <p class="project-name">Vulcan — Sitio Inmersivo</p>
+        <p class="project-year">2024</p>
+      </div>
+    </div>
+
+    <!-- Proyecto 5 -->
+    <div class="project-card reveal" style="transition-delay:0.25s" data-cat="arte" data-id="neon-festival">
+      <div class="project-thumb">
+        <canvas class="project-canvas" data-type="particles" data-palette="purple"></canvas>
+        <div class="project-overlay">
+          <p class="project-hover-title">Neon Festival</p>
+          <p class="project-hover-desc">Dirección de arte completa para festival de música electrónica: identidad, señalética y proyecciones en vivo.</p>
+          <div class="project-tags">
+            <span class="ptag">Dir. de Arte</span>
+            <span class="ptag">Print</span>
+          </div>
+        </div>
+      </div>
+      <div class="project-info">
+        <p class="project-cat">Dirección de Arte</p>
+        <p class="project-name">Neon Festival — Campaña</p>
+        <p class="project-year">2024</p>
+      </div>
+    </div>
+
+    <!-- Proyecto 6 — wide -->
+    <div class="project-card wide reveal" style="transition-delay:0.3s" data-cat="identidad" data-id="forge-brand">
+      <div class="project-thumb">
+        <canvas class="project-canvas" data-type="geo" data-palette="teal"></canvas>
+        <div class="project-overlay">
+          <p class="project-hover-title">Forge Brand System</p>
+          <p class="project-hover-desc">Rediseño de marca para empresa industrial premium: equilibrio entre herencia y modernidad.</p>
+          <div class="project-tags">
+            <span class="ptag">Rebranding</span>
+            <span class="ptag">Sistema</span>
+            <span class="ptag">Guía</span>
+          </div>
+        </div>
+      </div>
+      <div class="project-info">
+        <p class="project-cat">Identidad Visual</p>
+        <p class="project-name">Forge — Sistema de Marca</p>
+        <p class="project-year">2023</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════
+     MODAL DE PROYECTO
+     ══════════════════════════════════════════════════ -->
+<div class="modal-overlay" id="modal-overlay">
+  <div class="modal">
+    <button class="modal-close" id="modal-close">✕</button>
+    <div class="modal-canvas-wrap">
+      <canvas class="modal-canvas" id="modal-canvas"></canvas>
+    </div>
+    <div class="modal-body">
+      <p class="modal-cat" id="modal-cat"></p>
+      <h2 class="modal-title" id="modal-title"></h2>
+      <p class="modal-desc" id="modal-desc"></p>
+      <div class="modal-meta">
+        <div class="modal-meta-item">
+          <label>Año</label>
+          <span id="modal-year"></span>
+        </div>
+        <div class="modal-meta-item">
+          <label>Cliente</label>
+          <span id="modal-client"></span>
+        </div>
+        <div class="modal-meta-item">
+          <label>Duración</label>
+          <span id="modal-duration"></span>
+        </div>
+      </div>
+      <div class="project-tags" id="modal-tags" style="margin-bottom:2rem;"></div>
+      <a href="#contacto" class="modal-link" id="modal-link" onclick="document.getElementById('modal-overlay').classList.remove('open');document.body.style.overflow=''">
+        ¿Proyecto similar? Hablemos →
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════
+     PARALLAX BANNER
+     ══════════════════════════════════════════════════ -->
+<div class="parallax-banner">
+  <canvas id="parallax-canvas"></canvas>
+  <div class="parallax-content reveal">
+    <h2>Sin límites</h2>
+    <p>Diseño que conecta, mueve e inspira</p>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════
+     SERVICIOS
+     ══════════════════════════════════════════════════ -->
+<section class="services" id="servicios">
+  <div class="section-header reveal">
+    <p class="section-label">Servicios</p>
+    <h2 class="section-title">¿En qué puedo ayudarte?</h2>
+    <p class="section-sub">Trabajo en proyectos completos o me integro a tu equipo según lo necesites.</p>
+  </div>
+
+  <div class="services-grid" style="margin-top:4rem;">
+
+    <div class="service-item reveal" data-num="01">
+      <svg class="service-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5">
+        <circle cx="24" cy="24" r="10"/>
+        <path d="M24 4v6M24 38v6M4 24h6M38 24h6M8.7 8.7l4.2 4.2M35.1 35.1l4.2 4.2M8.7 39.3l4.2-4.2M35.1 12.9l4.2-4.2"/>
+      </svg>
+      <h3 class="service-name">Identidad Visual</h3>
+      <p class="service-desc">Sistemas de marca que comunican quiénes son y por qué importan. Desde el logotipo hasta la guía de aplicaciones.</p>
+      <ul class="service-list">
+        <li>Logotipo y símbolo</li>
+        <li>Sistema tipográfico y de color</li>
+        <li>Guía de identidad completa</li>
+        <li>Aplicaciones en packaging y print</li>
+      </ul>
+    </div>
+
+    <div class="service-item reveal" style="transition-delay:0.1s" data-num="02">
+      <svg class="service-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5">
+        <rect x="6" y="10" width="36" height="26" rx="2"/>
+        <path d="M18 36l-4 6h20l-4-6M6 30h36"/>
+        <path d="M20 20l4-4 4 4M24 16v10"/>
+      </svg>
+      <h3 class="service-name">Motion Design</h3>
+      <p class="service-desc">Animación y movimiento como lenguaje narrativo. Títulos, transiciones, explainers y piezas experimentales.</p>
+      <ul class="service-list">
+        <li>Title sequences y aperturas</li>
+        <li>Motion graphics para redes</li>
+        <li>Animación de logotipos</li>
+        <li>Explainer videos</li>
+      </ul>
+    </div>
+
+    <div class="service-item reveal" style="transition-delay:0.2s" data-num="03">
+      <svg class="service-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5">
+        <rect x="8" y="8" width="32" height="32" rx="3"/>
+        <path d="M16 20h16M16 24h10M16 28h12"/>
+        <circle cx="36" cy="14" r="1.5" fill="currentColor"/>
+      </svg>
+      <h3 class="service-name">UX / UI Design</h3>
+      <p class="service-desc">Interfaces digitales que equilibran estética y funcionalidad. Investigación de usuario, wireframes y prototipos.</p>
+      <ul class="service-list">
+        <li>Research y mapeo de usuario</li>
+        <li>Wireframing y prototipos</li>
+        <li>Diseño de interfaz final</li>
+        <li>Sistemas de diseño en Figma</li>
+      </ul>
+    </div>
+
+    <div class="service-item reveal" style="transition-delay:0.3s" data-num="04">
+      <svg class="service-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5">
+        <path d="M6 36L18 24l8 8L38 18l4 4"/>
+        <circle cx="10" cy="12" r="4"/>
+        <path d="M10 16v8"/>
+      </svg>
+      <h3 class="service-name">Web Design & Dev</h3>
+      <p class="service-desc">Sitios web que van más allá del template. Experiencias inmersivas con scroll narrativo, WebGL y animación avanzada.</p>
+      <ul class="service-list">
+        <li>Diseño y desarrollo front-end</li>
+        <li>Experiencias scroll-driven</li>
+        <li>Animación WebGL / Canvas</li>
+        <li>Integración con CMS</li>
+      </ul>
+    </div>
+
+    <div class="service-item reveal" style="transition-delay:0.35s" data-num="05">
+      <svg class="service-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5">
+        <path d="M8 40l8-20 12 14 6-10 6 16"/>
+        <path d="M6 12h36M6 18h24"/>
+      </svg>
+      <h3 class="service-name">Dirección de Arte</h3>
+      <p class="service-desc">Visión creativa integral para campañas, eventos y proyectos donde el concepto es tan importante como la ejecución.</p>
+      <ul class="service-list">
+        <li>Concepto y estrategia visual</li>
+        <li>Campañas 360°</li>
+        <li>Art direction para foto y video</li>
+        <li>Proyecciones y experiencias físicas</li>
+      </ul>
+    </div>
+
+    <div class="service-item reveal" style="transition-delay:0.4s" data-num="06">
+      <svg class="service-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5">
+        <path d="M24 6C14 6 6 14 6 24s8 18 18 18 18-8 18-18S34 6 24 6z"/>
+        <path d="M24 14v10l6 6"/>
+        <path d="M14 24h4M30 24h4M24 14v4M24 30v4"/>
+      </svg>
+      <h3 class="service-name">Consultoría Creativa</h3>
+      <p class="service-desc">Sesiones de estrategia para marcas que necesitan una mirada externa fresca. Auditoría visual, hoja de ruta y plan de acción.</p>
+      <ul class="service-list">
+        <li>Auditoría de identidad visual</li>
+        <li>Estrategia de comunicación</li>
+        <li>Workshops de ideación</li>
+        <li>Mentoring para equipos</li>
+      </ul>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════
+     PROCESO
+     ══════════════════════════════════════════════════ -->
+<section class="process" id="proceso">
+  <div class="process-inner">
+    <div class="section-header reveal" style="text-align:left;padding:0;">
+      <p class="section-label">Mi proceso</p>
+      <h2 class="section-title">Cómo trabajo</h2>
+      <p class="section-sub" style="margin-inline:0;margin-top:0.8rem;">Un proceso claro que garantiza resultados. Sin sorpresas, sin entregas a medias.</p>
+    </div>
+
+    <div class="process-steps">
+
+      <div class="process-step reveal">
+        <div class="step-num">01</div>
+        <div class="step-body">
+          <h3 class="step-title">Descubrimiento</h3>
+          <p class="step-desc">Empieza con una conversación profunda. Entiendo tu marca, tu audiencia, tus objetivos y lo que te diferencia. Sin este paso no avanzo: el brief es el mapa.</p>
+        </div>
+      </div>
+
+      <div class="process-step reveal" style="transition-delay:0.1s">
+        <div class="step-num">02</div>
+        <div class="step-body">
+          <h3 class="step-title">Concepto & Estrategia</h3>
+          <p class="step-desc">Desarrollo 2-3 direcciones creativas distintas, cada una con su lógica y justificación. No presento variaciones de lo mismo: presento caminos reales con consecuencias distintas.</p>
+        </div>
+      </div>
+
+      <div class="process-step reveal" style="transition-delay:0.15s">
+        <div class="step-num">03</div>
+        <div class="step-body">
+          <h3 class="step-title">Diseño & Producción</h3>
+          <p class="step-desc">Con la dirección aprobada, ejecuto con precisión. Mantengo comunicación continua con checkpoints clave. Trabajo en iteraciones rápidas con feedback integrado.</p>
+        </div>
+      </div>
+
+      <div class="process-step reveal" style="transition-delay:0.2s">
+        <div class="step-num">04</div>
+        <div class="step-body">
+          <h3 class="step-title">Refinamiento</h3>
+          <p class="step-desc">Ronda de ajustes basados en feedback real. Incluyo hasta 3 rondas de revisiones. Los detalles importan: aquí es donde el trabajo pasa de bueno a memorable.</p>
+        </div>
+      </div>
+
+      <div class="process-step reveal" style="transition-delay:0.25s">
+        <div class="step-num">05</div>
+        <div class="step-body">
+          <h3 class="step-title">Entrega & Soporte</h3>
+          <p class="step-desc">Entrego archivos organizados, en todos los formatos necesarios, con documentación clara de uso. Y no desaparezco: ofrezco soporte post-entrega de 30 días para cualquier duda.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════
+     CLIENTES — marquee
+     ══════════════════════════════════════════════════ -->
+<section class="clients">
+  <p class="clients-label">Marcas con las que he trabajado</p>
+  <div class="clients-track-wrap">
+    <div class="clients-track">
+      <span class="client-logo">FUEGO DRINKS</span>
+      <span class="client-logo">ATLAS LABS</span>
+      <span class="client-logo">VULCAN ARCH.</span>
+      <span class="client-logo">NEON EVENTS</span>
+      <span class="client-logo">FORGE INDUSTRIES</span>
+      <span class="client-logo">SOLARIS STUDIO</span>
+      <span class="client-logo">MERIDIAN</span>
+      <span class="client-logo">APEX BRAND CO.</span>
+      <!-- Duplicado para loop infinito -->
+      <span class="client-logo">FUEGO DRINKS</span>
+      <span class="client-logo">ATLAS LABS</span>
+      <span class="client-logo">VULCAN ARCH.</span>
+      <span class="client-logo">NEON EVENTS</span>
+      <span class="client-logo">FORGE INDUSTRIES</span>
+      <span class="client-logo">SOLARIS STUDIO</span>
+      <span class="client-logo">MERIDIAN</span>
+      <span class="client-logo">APEX BRAND CO.</span>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════
+     CONTACTO
+     ══════════════════════════════════════════════════ -->
+<section class="contact" id="contacto">
+  <div class="contact-inner">
+
+    <div class="contact-info">
+      <h2 class="contact-title reveal">
+        ¿Tienes un proyecto<br><span>que merece arder?</span>
+      </h2>
+      <p class="contact-body reveal" style="transition-delay:0.1s">
+        Estoy disponible para proyectos nuevos, colaboraciones y consultas. Cuéntame qué tienes en mente y te respondo en menos de 24 horas.
+      </p>
+
+      <div class="contact-links reveal" style="transition-delay:0.2s">
+        <a href="mailto:hola@ignitestudio.com" class="contact-link">
+          <div class="contact-link-icon">✉</div>
+          hola@ignitestudio.com
+        </a>
+        <a href="https://instagram.com" target="_blank" class="contact-link">
+          <div class="contact-link-icon">◈</div>
+          @ignite.studio
+        </a>
+        <a href="https://linkedin.com" target="_blank" class="contact-link">
+          <div class="contact-link-icon">in</div>
+          linkedin.com/in/javierserrano
+        </a>
+        <a href="https://behance.net" target="_blank" class="contact-link">
+          <div class="contact-link-icon">Bē</div>
+          behance.net/ignite
+        </a>
+      </div>
+    </div>
+
+    <div class="reveal" style="transition-delay:0.15s">
+      <form class="contact-form" id="contact-form" novalidate>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="f-name">Nombre</label>
+            <input type="text" id="f-name" placeholder="Tu nombre" required>
+          </div>
+          <div class="form-group">
+            <label for="f-email">Email</label>
+            <input type="email" id="f-email" placeholder="tu@email.com" required>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="f-service">Servicio de interés</label>
+          <select id="f-service">
+            <option value="">Selecciona un servicio...</option>
+            <option>Identidad Visual</option>
+            <option>Motion Design</option>
+            <option>UX / UI Design</option>
+            <option>Web Design & Desarrollo</option>
+            <option>Dirección de Arte</option>
+            <option>Consultoría Creativa</option>
+            <option>Otro / No sé todavía</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="f-budget">Presupuesto aproximado</label>
+          <select id="f-budget">
+            <option value="">Selecciona un rango...</option>
+            <option>Hasta €2,000</option>
+            <option>€2,000 – €5,000</option>
+            <option>€5,000 – €15,000</option>
+            <option>€15,000+</option>
+            <option>Prefiero discutirlo</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="f-msg">Cuéntame sobre tu proyecto</label>
+          <textarea id="f-msg" placeholder="¿Qué tienes en mente? Contexto, objetivos, fechas..." required></textarea>
+        </div>
+        <button type="submit" class="form-submit">Enviar mensaje →</button>
+      </form>
+      <div class="form-success" id="form-success">
+        <p>🔥 ¡Mensaje enviado!</p>
+        <p style="font-family:'Barlow',sans-serif;font-size:0.9rem;font-weight:300;color:var(--muted);margin-top:0.8rem;">Te respondo en menos de 24 horas.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ─── FOOTER ─── -->
+<footer>
+  <a href="#" class="footer-logo">IGNITE</a>
+  <ul class="footer-links">
+    <li><a href="#sobre-mi">Sobre mí</a></li>
+    <li><a href="#portafolio">Portafolio</a></li>
+    <li><a href="#servicios">Servicios</a></li>
+    <li><a href="#contacto">Contacto</a></li>
+  </ul>
+  <p class="footer-right">© 2026 Ignite Studio<br>Javier Serrano — Madrid</p>
+</footer>
+
+<script>
+/* ══════════════════════════════════════════════════
+   IGNITE STUDIO — main.js
+   ══════════════════════════════════════════════════ */
+
+// ─── CURSOR PERSONALIZADO ──────────────────────────
+const cursorDot  = document.getElementById('cursor-dot');
+const cursorRing = document.getElementById('cursor-ring');
+let mx = 0, my = 0, rx = 0, ry = 0;
+
+document.addEventListener('mousemove', e => {
+  mx = e.clientX; my = e.clientY;
+  cursorDot.style.left  = mx + 'px';
+  cursorDot.style.top   = my + 'px';
+});
+
+(function animCursor() {
+  requestAnimationFrame(animCursor);
+  rx += (mx - rx) * 0.12;
+  ry += (my - ry) * 0.12;
+  cursorRing.style.left = rx + 'px';
+  cursorRing.style.top  = ry + 'px';
+})();
+
+document.querySelectorAll('a, button, .project-card, .filter-btn, .modal-close').forEach(el => {
+  el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
+  el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
+});
+
+// ─── NAVBAR ───────────────────────────────────────
+const navbar  = document.getElementById('navbar');
+const burger  = document.getElementById('nav-burger');
+const mobileMenu = document.getElementById('nav-mobile');
+
+burger.addEventListener('click', () => {
+  burger.classList.toggle('open');
+  mobileMenu.classList.toggle('open');
+});
+mobileMenu.querySelectorAll('a').forEach(a =>
+  a.addEventListener('click', () => {
+    burger.classList.remove('open');
+    mobileMenu.classList.remove('open');
+  })
+);
+
+// ─── HERO CANVAS — scroll-driven ──────────────────
+const heroCanvas = document.getElementById('hero-canvas');
+const hCtx = heroCanvas.getContext('2d');
+let hW = 0, hH = 0;
+
+function resizeHero() {
+  hW = heroCanvas.width  = heroCanvas.offsetWidth;
+  hH = heroCanvas.height = heroCanvas.offsetHeight;
+  drawHeroFrame(smoothT);
+}
+window.addEventListener('resize', resizeHero);
+
+const TOTAL_P = 300;
+const pData   = new Float32Array(TOTAL_P * 8);
+
+for (let i = 0; i < TOTAL_P; i++) {
+  const s  = i / TOTAL_P;
+  const o  = i * 8;
+  const s2 = (s * 137.508) % 1;
+  const s3 = (s * 73.13)   % 1;
+  const s4 = (s * 53.31)   % 1;
+  const s5 = (s * 97.71)   % 1;
+  const s6 = (s * 41.17)   % 1;
+  const s7 = (s * 179.3)   % 1;
+  const isEmber = s3 > 0.72 ? 1 : 0;
+  const baseSpeed = 1.0 + s2 * 3.8;
+  pData[o+0] = s;
+  pData[o+1] = isEmber ? baseSpeed * 1.5 : baseSpeed;
+  pData[o+2] = (s3 - 0.5) * 2.2;
+  pData[o+3] = 90 + s4 * 130;
+  pData[o+4] = isEmber ? (1.2 + s5 * 2.5) * 0.6 : (1.8 + s5 * 4.5);
+  pData[o+5] = 8 + s6 * 38;
+  pData[o+6] = 0.1 + s7 * 0.8;
+  pData[o+7] = isEmber;
+}
+
+const lifeOffsets = new Float32Array(TOTAL_P);
+for (let i = 0; i < TOTAL_P; i++)
+  lifeOffsets[i] = (i / TOTAL_P) * pData[i * 8 + 3];
+
+const FRAME_SCALE = 450;
+let smoothT = 0, lastDrawT = -99;
+
+function drawHeroFrame(t) {
+  if (!hW || !hH) return;
+  if (Math.abs(t - lastDrawT) < 0.04) return;
+  lastDrawT = t;
+
+  hCtx.fillStyle = '#050200';
+  hCtx.fillRect(0, 0, hW, hH);
+
+  const gI = Math.min(t / 100, 0.45);
+  const gCy = hH * 0.88;
+  const bg = hCtx.createRadialGradient(hW/2, gCy, 0, hW/2, gCy, hH * 0.75);
+  bg.addColorStop(0,   `rgba(210,55,0,${gI})`);
+  bg.addColorStop(0.4, `rgba(120,25,0,${gI * 0.5})`);
+  bg.addColorStop(1,   'rgba(0,0,0,0)');
+  hCtx.fillStyle = bg;
+  hCtx.fillRect(0, 0, hW, hH);
+
+  for (let i = 0; i < TOTAL_P; i++) {
+    const o  = i * 8;
+    const phase   = pData[o]   * Math.PI * 2;
+    const speed   = pData[o+1];
+    const drift   = pData[o+2];
+    const maxLife = pData[o+3];
+    const size    = pData[o+4];
+    const hue     = pData[o+5];
+    const spawnXr = pData[o+6];
+    const isEmber = pData[o+7];
+
+    const life = (t * speed + lifeOffsets[i]) % maxLife;
+    const norm = life / maxLife;
+    const x = spawnXr * hW + drift * life + Math.sin(life * 0.1 + phase) * 12;
+    const y = hH - norm * (hH + 80) + 40;
+
+    let alpha = norm < 0.12 ? norm / 0.12 : Math.max(0, 1 - (norm - 0.12) / 0.88);
+    alpha = Math.min(alpha, 1);
+    if (alpha < 0.01) continue;
+
+    const sz = size * (1 - norm * 0.45);
+
+    if (isEmber) {
+      hCtx.fillStyle = `hsla(${hue+28},100%,72%,${alpha * 0.9})`;
+      hCtx.beginPath();
+      hCtx.arc(x, y, sz * 0.5, 0, Math.PI * 2);
+      hCtx.fill();
+    } else {
+      const r  = sz * 2.6;
+      const gr = hCtx.createRadialGradient(x, y, 0, x, y, r);
+      gr.addColorStop(0,    `hsla(${hue+28},100%,84%,${alpha})`);
+      gr.addColorStop(0.38, `hsla(${hue},   100%,58%,${alpha * 0.78})`);
+      gr.addColorStop(1,    `hsla(${hue-8}, 100%,28%,0)`);
+      hCtx.fillStyle = gr;
+      hCtx.beginPath();
+      hCtx.arc(x, y, r, 0, Math.PI * 2);
+      hCtx.fill();
+    }
+  }
+}
+
+let rawT = 0, rafActive = false;
+function lerp(a, b, f) { return a + (b - a) * f; }
+
+function smoothLoop() {
+  smoothT = lerp(smoothT, rawT, 0.075);
+  drawHeroFrame(smoothT);
+  if (Math.abs(rawT - smoothT) > 0.08) {
+    requestAnimationFrame(smoothLoop);
+  } else {
+    drawHeroFrame(rawT); smoothT = rawT; rafActive = false;
+  }
+}
+function kickSmooth() {
+  if (!rafActive) { rafActive = true; requestAnimationFrame(smoothLoop); }
+}
+
+// ─── CANVAS PROYECTO (generativo por paleta) ───
+function createProjectCanvas(canvasEl, palette, type) {
+  const ctx = canvasEl.getContext('2d');
+  let W = 0, H = 0, t = 0, raf = null;
+
+  const resize = () => {
+    W = canvasEl.width  = canvasEl.offsetWidth;
+    H = canvasEl.height = canvasEl.offsetHeight;
+  };
+  resize();
+
+  const io = new IntersectionObserver(([e]) => {
+    if (e.isIntersecting) { if (!raf) loop(); }
+    else { cancelAnimationFrame(raf); raf = null; }
+  }, { threshold: 0.1 });
+  io.observe(canvasEl);
+
+  function loop() {
+    raf = requestAnimationFrame(loop);
+    t += 0.008;
+    draw();
+  }
+
+  function draw() {
+    ctx.fillStyle = palette.bg;
+    ctx.fillRect(0, 0, W, H);
+
+    if (type === 'waves') {
+      for (let j = 0; j < 6; j++) {
+        ctx.beginPath();
+        ctx.moveTo(0, H * 0.5);
+        for (let x = 0; x <= W; x += 4) {
+          const y = H * 0.5
+            + Math.sin(x * 0.012 + t + j * 0.8) * (H * 0.12 + j * H * 0.04)
+            + Math.sin(x * 0.006 - t * 0.7 + j) * H * 0.06;
+          ctx.lineTo(x, y);
+        }
+        ctx.strokeStyle = `hsla(${palette.h + j * 8},80%,60%,${0.15 - j * 0.02})`;
+        ctx.lineWidth = 1.5;
+        ctx.stroke();
+      }
+      // Glow dot
+      const gx = W * (0.5 + Math.sin(t * 0.4) * 0.2);
+      const gy = H * (0.5 + Math.sin(t * 0.3) * 0.15);
+      const gr = ctx.createRadialGradient(gx, gy, 0, gx, gy, W * 0.35);
+      gr.addColorStop(0, `hsla(${palette.h},100%,65%,0.18)`);
+      gr.addColorStop(1, 'transparent');
+      ctx.fillStyle = gr; ctx.fillRect(0, 0, W, H);
+
+    } else if (type === 'grid') {
+      const spacing = 40;
+      for (let x = 0; x < W + spacing; x += spacing) {
+        for (let y = 0; y < H + spacing; y += spacing) {
+          const d = Math.hypot(x - W/2, y - H/2);
+          const wave = Math.sin(d * 0.05 - t * 2);
+          const r = 2 + wave * 2.5;
+          const a = 0.1 + (wave + 1) * 0.15;
+          ctx.fillStyle = `hsla(${palette.h},80%,65%,${a})`;
+          ctx.beginPath();
+          ctx.arc(x + Math.sin(t + y * 0.05) * 3, y + Math.cos(t + x * 0.05) * 3, r, 0, Math.PI * 2);
+          ctx.fill();
+        }
+      }
+
+    } else if (type === 'particles') {
+      if (!draw._ps) {
+        draw._ps = Array.from({ length: 60 }, () => ({
+          x: Math.random() * W, y: Math.random() * H,
+          vx: (Math.random() - 0.5) * 0.6, vy: -0.3 - Math.random() * 0.5,
+          s: 1 + Math.random() * 3, a: Math.random(),
+        }));
+      }
+      draw._ps.forEach(p => {
+        p.x += p.vx; p.y += p.vy; p.a -= 0.004;
+        if (p.a <= 0 || p.y < 0) {
+          p.x = Math.random() * W; p.y = H + 10; p.a = 0.3 + Math.random() * 0.5;
+        }
+        ctx.fillStyle = `hsla(${palette.h + Math.random()*20},100%,65%,${p.a})`;
+        ctx.beginPath(); ctx.arc(p.x, p.y, p.s, 0, Math.PI*2); ctx.fill();
+      });
+
+    } else if (type === 'geo') {
+      const cx = W/2, cy = H/2;
+      for (let k = 0; k < 5; k++) {
+        ctx.save();
+        ctx.translate(cx, cy);
+        ctx.rotate(t * (0.2 + k * 0.08) * (k % 2 ? 1 : -1));
+        ctx.strokeStyle = `hsla(${palette.h + k * 12},70%,65%,${0.12 - k * 0.015})`;
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        const sides = 3 + k;
+        for (let i = 0; i <= sides; i++) {
+          const a = (i / sides) * Math.PI * 2 - Math.PI/2;
+          const r = (80 + k * 35) * (W / 400);
+          if (i === 0) ctx.moveTo(Math.cos(a)*r, Math.sin(a)*r);
+          else ctx.lineTo(Math.cos(a)*r, Math.sin(a)*r);
+        }
+        ctx.closePath(); ctx.stroke();
+        ctx.restore();
+      }
+      const gr = ctx.createRadialGradient(cx, cy, 0, cx, cy, W*0.4);
+      gr.addColorStop(0, `hsla(${palette.h},100%,65%,0.12)`);
+      gr.addColorStop(1, 'transparent');
+      ctx.fillStyle = gr; ctx.fillRect(0, 0, W, H);
+
+    } else if (type === 'noise') {
+      const img = ctx.createImageData(W, H);
+      const d = img.data;
+      const [r,g,b] = palette.rgb;
+      for (let i = 0; i < d.length; i += 4) {
+        const px = (i/4) % W, py = Math.floor((i/4)/W);
+        const n = Math.sin(px*0.04 + t) * Math.cos(py*0.04 + t*0.7) * 0.5 + 0.5;
+        const bright = n * 60;
+        d[i]   = r + bright;
+        d[i+1] = g + bright * 0.3;
+        d[i+2] = b + bright * 0.1;
+        d[i+3] = 255;
+      }
+      ctx.putImageData(img, 0, 0);
+    }
+  }
+}
+
+// ─── CANVAS ABOUT PHOTO (retrato generativo) ──
+function initAboutCanvas(canvasEl) {
+  const ctx = canvasEl.getContext('2d');
+  let W, H, t = 0;
+  const resize = () => {
+    W = canvasEl.width = canvasEl.offsetWidth;
+    H = canvasEl.height = canvasEl.offsetHeight;
+  };
+  resize();
+  window.addEventListener('resize', resize);
+
+  const lines = Array.from({length: 80}, (_, i) => ({
+    x: W * 0.1 + (i / 80) * W * 0.8,
+    phase: i * 0.4,
+    amp: 8 + Math.random() * 18,
+    speed: 0.3 + Math.random() * 0.5,
+    hue: 15 + i * 0.5,
+  }));
+
+  (function loop() {
+    requestAnimationFrame(loop);
+    t += 0.012;
+    ctx.fillStyle = 'rgba(10,6,2,0.15)';
+    ctx.fillRect(0, 0, W, H);
+
+    lines.forEach(l => {
+      ctx.beginPath();
+      ctx.moveTo(l.x, 0);
+      for (let y = 0; y < H; y += 3) {
+        const x = l.x + Math.sin(y * 0.018 + t * l.speed + l.phase) * l.amp;
+        ctx.lineTo(x, y);
+      }
+      const alpha = 0.06 + Math.sin(t * 0.5 + l.phase) * 0.03;
+      ctx.strokeStyle = `hsla(${l.hue},100%,60%,${alpha})`;
+      ctx.lineWidth = 0.8;
+      ctx.stroke();
+    });
+
+    // Silueta circular central como "retrato"
+    const cx = W/2, cy = H * 0.42, rad = W * 0.28;
+    const gr = ctx.createRadialGradient(cx, cy-rad*0.1, rad*0.1, cx, cy, rad);
+    gr.addColorStop(0, 'rgba(255,140,0,0.18)');
+    gr.addColorStop(0.5,'rgba(255,69,0,0.08)');
+    gr.addColorStop(1, 'transparent');
+    ctx.fillStyle = gr;
+    ctx.beginPath(); ctx.arc(cx, cy, rad, 0, Math.PI*2); ctx.fill();
+
+    // Iniciales centradas
+    ctx.font = `bold ${W*0.22}px 'Bebas Neue', sans-serif`;
+    ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+    const gText = ctx.createLinearGradient(cx - W*0.15, cy, cx + W*0.15, cy);
+    gText.addColorStop(0, 'rgba(255,215,0,0.85)');
+    gText.addColorStop(1, 'rgba(255,69,0,0.85)');
+    ctx.fillStyle = gText;
+    ctx.fillText('JS', cx, cy);
+  })();
+}
+
+// ─── CANVAS PARALLAX ──────────────────────────
+const parCanvas = document.getElementById('parallax-canvas');
+const pCtx = parCanvas.getContext('2d');
+let pW = 0, pH = 0;
+const parPs = [];
+
+function resizePar() {
+  pW = parCanvas.width  = parCanvas.offsetWidth;
+  pH = parCanvas.height = parCanvas.offsetHeight;
+}
+resizePar();
+window.addEventListener('resize', resizePar);
+
+class PP {
+  constructor() { this.r(); }
+  r() {
+    this.x = Math.random() * pW; this.y = Math.random() * pH;
+    this.vx = (Math.random()-0.5)*0.4; this.vy = -0.2 - Math.random()*0.6;
+    this.s = 0.5 + Math.random()*2; this.a = 0.1 + Math.random()*0.5;
+    this.h = 15 + Math.random() * 35;
+  }
+  u() { this.x += this.vx; this.y += this.vy; this.a -= 0.002; if (this.a <= 0 || this.y < -8) this.r(); }
+  d(c) {
+    c.fillStyle = `hsla(${this.h},100%,60%,${this.a})`;
+    c.beginPath(); c.arc(this.x, this.y, this.s, 0, Math.PI*2); c.fill();
+  }
+}
+for (let i = 0; i < 90; i++) parPs.push(new PP());
+
+(function loopPar() {
+  requestAnimationFrame(loopPar);
+  pCtx.fillStyle = 'rgba(8,3,0,0.22)'; pCtx.fillRect(0, 0, pW, pH);
+  const bg = pCtx.createLinearGradient(0, 0, 0, pH);
+  bg.addColorStop(0,'rgba(12,3,0,0)'); bg.addColorStop(1,'rgba(65,14,0,0.18)');
+  pCtx.fillStyle = bg; pCtx.fillRect(0, 0, pW, pH);
+  parPs.forEach(p => { p.u(); p.d(pCtx); });
+})();
+
+// ─── FILTROS DE PORTAFOLIO ────────────────────
+const filterBtns = document.querySelectorAll('.filter-btn');
+const projectCards = document.querySelectorAll('.project-card');
+
+filterBtns.forEach(btn => {
+  btn.addEventListener('click', () => {
+    filterBtns.forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const cat = btn.dataset.filter;
+
+    projectCards.forEach(card => {
+      const match = cat === 'all' || card.dataset.cat === cat;
+      card.classList.toggle('hidden', !match);
+    });
+  });
+});
+
+// ─── MODAL DE PROYECTOS ───────────────────────
+const modalOverlay = document.getElementById('modal-overlay');
+const modalClose   = document.getElementById('modal-close');
+const modalCanvas  = document.getElementById('modal-canvas');
+
+const projectData = {
+  'fuego-identidad': {
+    cat: 'Identidad Visual',
+    title: 'FUEGO — Identidad Corporativa',
+    desc: 'Desarrollo completo de sistema de identidad visual para marca de bebidas premium. Desde el logotipo principal hasta el sistema tipográfico, paleta de color y aplicaciones en packaging. El proyecto buscaba transmitir energía, calidad y modernidad a través de un lenguaje visual cohesivo y memorable.',
+    year: '2025', client: 'Fuego Drinks', duration: '8 semanas',
+    tags: ['Identidad', 'Packaging', 'Branding', 'Tipografía'],
+    palette: {h:15, bg:'#080400', rgb:[20,5,0]}, type: 'geo',
+  },
+  'motion-reel': {
+    cat: 'Motion Design',
+    title: 'Motion Reel 2025',
+    desc: 'Compilado anual de trabajos de motion design incluyendo títulos de apertura, transiciones para eventos en vivo, animaciones de interfaz y piezas experimentales. Cada fragmento explora las posibilidades narrativas del movimiento como lenguaje visual puro.',
+    year: '2025', client: 'Personal', duration: '12 semanas',
+    tags: ['After Effects', 'Cinema 4D', 'Motion', 'Experimental'],
+    palette: {h:35, bg:'#060400', rgb:[15,10,0]}, type: 'waves',
+  },
+  'atlas-app': {
+    cat: 'UX/UI',
+    title: 'Atlas — App de Exploración',
+    desc: 'Diseño completo de interfaz para aplicación móvil de exploración geográfica y narrativa cultural. El reto fue crear una experiencia que equilibrara la densidad de información con una navegación fluida y disfrutable. Resultado: 94% de satisfacción en pruebas de usuario.',
+    year: '2024', client: 'Atlas Labs', duration: '16 semanas',
+    tags: ['Figma', 'UX Research', 'UI', 'Prototipado'],
+    palette: {h:200, bg:'#020508', rgb:[2,8,18]}, type: 'grid',
+  },
+  'vulcan-web': {
+    cat: 'Web Design',
+    title: 'Vulcan — Sitio Inmersivo',
+    desc: 'Diseño y desarrollo front-end de sitio web para estudio de arquitectura. La propuesta central: usar el scroll como mecanismo narrativo para contar la historia de cada proyecto. Tecnología WebGL y Canvas API para crear experiencias visuales que complementan las fotografías de obra.',
+    year: '2024', client: 'Vulcan Architects', duration: '10 semanas',
+    tags: ['WebGL', 'JavaScript', 'Three.js', 'GSAP'],
+    palette: {h:25, bg:'#060402', rgb:[16,8,2]}, type: 'noise',
+  },
+  'neon-festival': {
+    cat: 'Dirección de Arte',
+    title: 'Neon Festival — Campaña',
+    desc: 'Dirección de arte integral para festival de música electrónica. Concepto visual, sistema de comunicación, piezas para redes sociales, señalética del evento y proyecciones en vivo durante los shows principales. Una identidad que fusiona lo digital con lo físico.',
+    year: '2024', client: 'Neon Events', duration: '6 semanas',
+    tags: ['Dirección de Arte', 'Print', 'Digital', 'Proyecciones'],
+    palette: {h:270, bg:'#040208', rgb:[8,2,20]}, type: 'particles',
+  },
+  'forge-brand': {
+    cat: 'Identidad Visual',
+    title: 'Forge — Sistema de Marca',
+    desc: 'Rediseño de marca para empresa de manufactura industrial premium. El desafío: mantener la solidez y confianza de una empresa con 30 años de historia mientras se proyecta hacia audiencias contemporáneas. El resultado es un sistema de identidad que equilibra herencia y modernidad.',
+    year: '2023', client: 'Forge Industries', duration: '14 semanas',
+    tags: ['Rebranding', 'Sistema de Marca', 'Guía', 'Print'],
+    palette: {h:40, bg:'#060500', rgb:[16,12,0]}, type: 'geo',
+  },
+};
+
+let activeModalCanvas = null;
+
+document.querySelectorAll('.project-card[data-id]').forEach(card => {
+  card.addEventListener('click', () => {
+    const id   = card.dataset.id;
+    const data = projectData[id];
+    if (!data) return;
+
+    document.getElementById('modal-cat').textContent   = data.cat;
+    document.getElementById('modal-title').textContent = data.title;
+    document.getElementById('modal-desc').textContent  = data.desc;
+    document.getElementById('modal-year').textContent  = data.year;
+    document.getElementById('modal-client').textContent= data.client;
+    document.getElementById('modal-duration').textContent = data.duration;
+
+    const tagsEl = document.getElementById('modal-tags');
+    tagsEl.innerHTML = data.tags.map(t => `<span class="ptag">${t}</span>`).join('');
+
+    if (activeModalCanvas) activeModalCanvas = null;
+    modalCanvas.width  = modalCanvas.offsetWidth;
+    modalCanvas.height = modalCanvas.offsetHeight;
+    activeModalCanvas = true;
+    createProjectCanvas(modalCanvas, data.palette, data.type);
+
+    modalOverlay.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  });
+});
+
+function closeModal() {
+  modalOverlay.classList.remove('open');
+  document.body.style.overflow = '';
+}
+modalClose.addEventListener('click', closeModal);
+modalOverlay.addEventListener('click', e => { if (e.target === modalOverlay) closeModal(); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+// ─── FORMULARIO DE CONTACTO ────────────────────
+const contactForm = document.getElementById('contact-form');
+contactForm.addEventListener('submit', e => {
+  e.preventDefault();
+  const btn = contactForm.querySelector('.form-submit');
+  btn.textContent = 'Enviando...';
+  btn.disabled = true;
+
+  setTimeout(() => {
+    contactForm.style.display = 'none';
+    document.getElementById('form-success').style.display = 'block';
+    showToast('¡Mensaje enviado! Te respondo pronto 🔥');
+  }, 1200);
+});
+
+// ─── TOAST ────────────────────────────────────
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3500);
+}
+
+// ─── SCROLL HANDLER ───────────────────────────
+const heroDriver   = document.getElementById('hero-driver');
+const heroContent  = document.getElementById('hero-content');
+const scrollHint   = document.getElementById('scroll-hint');
+const heroScrollTx = document.getElementById('hero-scroll-text');
+let lastScrollY = -1;
+
+window.addEventListener('scroll', () => {
+  const scrollY = window.scrollY;
+  if (scrollY === lastScrollY) return;
+  lastScrollY = scrollY;
+
+  navbar.classList.toggle('scrolled', scrollY > 60);
+
+  const driverH  = heroDriver.offsetHeight - window.innerHeight;
+  const rawProg  = Math.max(0, Math.min(1, scrollY / driverH));
+  rawT = rawProg * FRAME_SCALE;
+  kickSmooth();
+
+  if (rawProg > 0.04) {
+    const fade = Math.max(0, 1 - rawProg * 4.5);
+    heroContent.style.opacity   = fade;
+    heroContent.style.transform = `translateY(${-rawProg * 50}px)`;
+    scrollHint.style.opacity    = Math.max(0, 1 - rawProg * 9);
+  } else {
+    heroContent.style.opacity = heroContent.style.transform = scrollHint.style.opacity = '';
+  }
+
+  if (rawProg > 0.3 && rawProg < 0.82)
+    heroScrollTx.classList.add('visible');
+  else
+    heroScrollTx.classList.remove('visible');
+
+  document.querySelectorAll('.reveal,.reveal-left,.reveal-right').forEach(el => {
+    if (el.getBoundingClientRect().top < window.innerHeight * 0.88)
+      el.classList.add('visible');
+  });
+});
+
+// ─── INIT ─────────────────────────────────────
+resizeHero();
+drawHeroFrame(0);
+
+// Inicializar canvases de proyectos
+document.querySelectorAll('.project-canvas[data-type]').forEach(c => {
+  const palettes = {
+    fire:    {h:15,  bg:'#0a0400', rgb:[25,8,0]},
+    blue:    {h:210, bg:'#020510', rgb:[2,6,22]},
+    purple:  {h:270, bg:'#060210', rgb:[10,2,22]},
+    amber:   {h:38,  bg:'#080500', rgb:[18,12,0]},
+    teal:    {h:170, bg:'#020806', rgb:[2,16,10]},
+    crimson: {h:345, bg:'#080202', rgb:[20,2,2]},
+  };
+  createProjectCanvas(c, palettes[c.dataset.palette] || palettes.fire, c.dataset.type);
+});
+
+// Canvas del "retrato"
+const aboutCanvas = document.getElementById('about-canvas');
+if (aboutCanvas) initAboutCanvas(aboutCanvas);
+
+// Reveal inicial
+window.dispatchEvent(new Event('scroll'));
+
+</script>
+</body>
+</html>
